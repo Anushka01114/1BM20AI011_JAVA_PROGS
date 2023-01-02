@@ -1,136 +1,140 @@
-public class Clock
+import java.io.*;
+
+class Clock
 {
-    private int hr; 
-    private int min; 
-    private int sec; 
-
-    public Clock(int hours, int minutes, int seconds)
-    {
-	      setTime(hours, minutes, seconds);
-    }
-          //Default constructor
-	        //Postcondition: hr = 0; min = 0; sec = 0
-    public Clock()
-    {
-        setTime(0, 0, 0);
-    }
-
-    public void setTime(int hours, int minutes, int seconds)
-    {
-	      if(0 <= hours && hours < 24)
-		       hr = hours;
-	      else
-		       hr = 0;
-
-        if(0 <= minutes && minutes < 60)
-		       min = minutes;
-	      else
-		       min = 0;
-
-	      if(0 <= seconds && seconds < 60)
-		       sec = seconds;
-	      else
-	         sec = 0;
-    }
-
-    public int getHours()
-    {
-	        return hr;
-    }
-    public int getMinutes()
-    {
-	        return min;
-    }
-
-    public int getSeconds()
-    {
-	        return sec;
-    }
-
-    public void printTime()
-    {
- 	        if(hr < 10)
-	           System.out.print("0");
-          System.out.print(hr + ":");
-
-	        if(min < 10)
-	           System.out.print("0");
-	        System.out.print(min + ":");
-
-	        if(sec < 10)
-	           System.out.print("0");
-	        System.out.print(sec);
-    }
-
-    public void incrementSeconds()
-    {
-          sec++;
-	        if(sec > 59)
-	        {
-	           sec = 0;
-	           incrementMinutes(); //increment minutes
-	        }
-    }
-  
-  //is reset to 00:00:53
-    public void incrementMinutes()
-    {
-	        min++;
-	        if(min > 59)
-	        {
-	           min = 0;
-	           incrementHours(); //increment hours
-	        }
-    }
- public void incrementHours()
-    {
-	      hr++;
-	      if(hr > 23)
- 	         hr = 0;
-    }
-
-    public boolean equals(Clock otherClock)
-	  {
-        return(hr == otherClock.hr
- 	             && min == otherClock.min
-               && sec == otherClock.sec);
-    }
-
-    public void makeCopy(Clock otherClock)
-	  {
-        hr = otherClock.hr;
-        min = otherClock.min;
-        sec = otherClock.sec;
-    }
-
-    public Clock getCopy()
-    {
-	      Clock temp = new Clock();
-
-	      temp.hr = hr;
-	      temp.min = min;
-	      temp.sec = sec;
-
-	      return temp;
-    }
-
-    public String toString()
-    {
-        String str = "";
-
-        if(hr < 10)
-	         str = "0";
-        str = str + hr + ":";
-
-        if(min < 10)
-	         str = str + "0" ;
-        str = str + min + ":";
-
-        if(sec < 10)
-	         str = str + "0";
-        str = str + sec;
-
-        return str;
-    }
+private int hours, mins,secs;
+//constructors
+Clock()
+{
+hours=12;
+mins=0;
+secs=0;
+}
+Clock(int h, int m, int s)
+{
+hours=h;
+mins=m;
+secs=s;
+}
+Clock(int num)
+{
+hours=num/360;
+mins=num/60;
+secs=num%360;
+}
+//instance methods
+void setClock(int seconds)
+{
+hours=seconds/360;
+mins=seconds/60;
+secs=seconds%360;
+System.out.println(hours+":"+mins+":"+secs");
+}
+//getters
+int getHours()
+{
+return this.hours;
+}
+int getMins()
+{
+return this.mins;
+}
+int getSecs()
+{
+return this.secs;
+}
+//setters
+void setHours(int h)
+{
+this.hours=h;
+}
+void setMins(int m)
+{
+this.mins=m;
+}
+void setSecs(int s)
+{
+this.secs=s;
+}
+//method tick
+void tick()
+{
+if (secs==59)
+{
+   if(mins==59)
+   {
+      if(hours==24)
+      hours==0;
+      else
+      hours++;
+   }
+   else
+   mins++;
+}
+else secs++;
+}
+//
+void addClock(obj Clock)
+{
+//?
+}
+//
+void toString()
+{
+//?
+}
+//
+void tickDown()
+{
+if (secs==0)
+{
+   if(mins==0)
+   {
+      if(hours==0)
+      hours==24;
+      else
+      hours--;
+   }
+   else
+   mins--;
+}
+else secs--;
+}
+//
+void subtractClock()
+{
+//?
+}
 }
 
+class jpe2
+{
+public static void main(String args[])
+    {
+      int read;
+      System.out.println("Enter the seconds since midnight");
+      Scanner sc=new Scanner(System.in);
+      read=sc.nextInt()
+      Clock firstClock=new Clock(read);
+     
+      for(int i=0;i<9;i++)
+      {
+         tick();
+         System.out.println(hours+":"+mins+":"+secs");
+      }
+     
+      Clock secondClock=new Clock(3,4,5);
+     
+      for(int i=0;i<9;i++)
+      {
+         tick();
+         System.out.println(hours+":"+mins+":"+secs");
+      }
+     
+      addClock(secondClock);
+     
+      toString();
+     
+      Clock thirdClock=new Clock(3,4,5);
+    }
+}
